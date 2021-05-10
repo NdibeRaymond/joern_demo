@@ -4,7 +4,9 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   editorContainerStyle: {
+    position:"fixed",
     width: "100%",
+    height:"100%",
     paddingLeft: (props) =>
       props.drawerOpen ? props.drawerWidth : props.sideNavWidth,
   },

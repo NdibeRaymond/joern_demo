@@ -36,6 +36,14 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     width: (props) => props.SideNavWidth,
+    "& ul": {
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        "& .navTopSection": {
+          flexGrow: 1
+        }
+    }
   },
   drawerDefaultListItemStyle: {
     justifyContent: "center",
@@ -65,6 +73,10 @@ function SideNav(props) {
     props.handleSetState({ drawerOpen: !props.drawerOpen });
   };
 
+  const handleTerminalToggle = ()=> {
+    props.handleSetState({ terminalOpen: !props.terminalOpen})
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -88,7 +100,7 @@ function SideNav(props) {
         </div>
         <Divider />
         <List>
-          {/* {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => ( */}
+          <div  className="navTopSection">
           <ListItem button className={classes.drawerDefaultListItemStyle}>
             <ListItemIcon>
               <FileCopyIcon />
@@ -100,6 +112,8 @@ function SideNav(props) {
               <SearchIcon />
             </ListItemIcon>
           </ListItem>
+          </div>
+          
 
           <ListItem
             button
@@ -107,6 +121,8 @@ function SideNav(props) {
               classes.drawerDefaultListItemStyle,
               classes.customIconStyle
             )}
+
+            onClick={handleTerminalToggle}
           >
             <ListItemIcon>
               <TerminalIcon />
@@ -118,7 +134,6 @@ function SideNav(props) {
               <SettingsIcon />
             </ListItemIcon>
           </ListItem>
-          {/* ))} */}
         </List>
       </Drawer>
     </div>

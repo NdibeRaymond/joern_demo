@@ -1,4 +1,5 @@
 import React from "react";
+import clsx from 'clsx';
 import { Terminal } from "xterm";
 import "xterm/css/xterm.css";
 import { nanoid } from "nanoid";
@@ -17,7 +18,25 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     right: 0,
     bottom: 0,
+    "& .xterm .xterm-viewport": {
+      overflowY: "hidden",
+    }
   },
+  terminalOpen: {
+    transition: theme.transitions.create("height", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    height:"auto",
+  },
+  terminalClose: {
+    transition: theme.transitions.create("height", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    height:0,
+    display:"hidden"
+  }
 }));
 
 function TerminalWindow(props) {
@@ -28,19 +47,22 @@ function TerminalWindow(props) {
     Instances: {},
   });
 
+  const {terminalOpen} = props;
+
   React.useEffect(() => {
     if (terminalRef) {
       const { instances } = state;
-      const term = new Terminal({ rows: 15 });
-      //   term.cursorBlink = true;
+      const term = new Terminal({ rows: 20 });
       term.open(terminalRef.current);
+
+
+      //   term.cursorBlink = true;
 
       let shellprompt = "$ ";
 
       term.prompt = function () {
         term.write("\r\n" + shellprompt);
       };
-
       term.writeln("Welcome to xterm.js");
       term.writeln(
         "This is a local terminal emulation, without a real terminal in the back-end."
@@ -84,7 +106,10 @@ function TerminalWindow(props) {
     }
   };
 
-  return <div ref={terminalRef} className={classes.TerminalStyle}></div>;
+  return <div ref={terminalRef} className={clsx(classes.TerminalStyle, {
+    [classes.terminalOpen]: terminalOpen,
+    [classes.terminalClose]: !terminalOpen,
+  })}></div>;
 }
 
 export default TerminalWindow;

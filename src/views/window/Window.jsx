@@ -9,6 +9,7 @@ function Window(props) {
     sideNavWidth: "49px",
     drawerWidth: "240px",
     drawerOpen: true,
+    terminalOpen: false,
   });
 
   const handleSetState = (obj) => {
@@ -19,7 +20,7 @@ function Window(props) {
     }
   };
 
-  const { drawerOpen, sideNavWidth, drawerWidth } = state;
+  const { drawerOpen,terminalOpen, sideNavWidth, drawerWidth } = state;
 
   return (
     <>
@@ -31,6 +32,7 @@ function Window(props) {
       <SideNav
         {...props}
         drawerOpen={drawerOpen}
+        terminalOpen={terminalOpen}
         sideNavWidth={sideNavWidth}
         handleSetState={handleSetState}
       />
@@ -43,6 +45,7 @@ function Window(props) {
       <TerminalWindow
         {...props}
         drawerOpen={drawerOpen}
+        terminalOpen={terminalOpen}
         sideNavWidth={sideNavWidth}
         drawerWidth={drawerWidth}
       />
